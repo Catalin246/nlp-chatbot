@@ -1,12 +1,12 @@
-# NLP Chatbot 
+# NLP Inholland Chatbot 
 
 group: 8
-delivery date: 
+delivery date: 21/06/2024
 Members:
-- Student 1 (123456)
-- Student 2 (246824)
-- Student 3 (321123)
-- Student 4 (321123)
+- Student 1 "Avornicesei, Cătălin" <690325@student.inholland.nl>
+- Student 2 "Paracchini, Roberta" <677676@student.inholland.nl>
+- Student 3 "Noşca, Tudor" <678549@student.inholland.nl>
+- Student 4 "Aouragh, Salah" <691096@student.inholland.nl>
 
 ## Introduction
 
@@ -23,11 +23,16 @@ This project is an NLP-based chatbot designed to answer questions about OER data
 
 1. Create a virtual environment and install dependencies:
     ```bash
-    python -m venv .venv
+    python3 -m venv .venv
     .venv/bin/pip install -r requirements.txt
     ```
 
-2. Run the Streamlit app:
+2. Preprocess the OER
+     ```bash
+    python3 src/preprocessing.py
+    ```
+
+3. Run the Streamlit app:
     ```bash
     .venv/bin/streamlit run app.py
     ```

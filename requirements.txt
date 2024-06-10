@@ -1,5 +1,7 @@
 streamlit
+PyMuPDF
+nltk
 sentence-transformers
-faiss-cpu
+scikit-learn
+numpy
 ollama
-PyPDF2
