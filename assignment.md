@@ -51,10 +51,10 @@ Provide a zip file containing your code, including preprocessing scripts, Embedd
 ```
 nlp_group_<number>.zip
     - README.md
-    - data (could be used to store the VectorDB files and raw unpreprocessed data)
+    - data (could be used to store the VectorDB files and raw.pdf unpreprocessed data)      
     - src (containing all python code)
     - requirements.txt
-    - app.py
+    - app.py (the app.py is outside of the src)
 ```
 
 to test the program I should only have to run `python -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/streamlit run app.py` or its windows equivalent `python -m venv .venv && .venv\Scripts\pip.exe install -r requirements.txt && .venv\Scripts\streamlit run app.py` 
