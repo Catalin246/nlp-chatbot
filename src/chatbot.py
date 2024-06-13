@@ -1,7 +1,9 @@
 import streamlit as st
 from embedding import Embedding
 from vectordb import VectorDB
-from ollama import Client
+
+from langchain.llms import Ollama
+
 
 class Chatbot:
     def __init__(self):
@@ -11,7 +13,9 @@ class Chatbot:
         self.conversation_history = []
         self.embedder = Embedding()
         self.vectordb = VectorDB()
-        self.llm = Client()
+
+        # Initialize the Ollama model
+        self.llm = Ollama(base_url='http://localhost:11434', model="llama3")
 
     def preprocess_input(self, user_input):
         """
@@ -50,22 +54,22 @@ class Chatbot:
         results = self.vectordb.query(user_embedding, top_n=1)
 
         # Generate a response based on the most similar text using LLM
-        # if results:
-        #     context = results[0]['text']
-        #     try:
-        #         if self.llm:
-        #             response = self.llm.generate(prompt=context + " " + user_input)
-        #         else:
-        #             response = "LLM is not available."
-        #     except Exception as e:
-        #         response = f"Failed to generate response using LLM: {e}"
-        # else:
-        #     response = "I couldn't find any relevant information for your query. Please try again."
+        if results:
+            context = results[0]['text']
+            try:
+                if self.llm:
+                    response = self.llm(context + " " + user_input)
+                else:
+                    response = "LLM is not available."
+            except Exception as e:
+                response = f"Failed to generate response using LLM: {e}"
+        else:
+            response = "I couldn't find any relevant information for your query. Please try again."
 
-        # self.conversation_history.append({"user": user_input, "bot": response})
-        # return response
+        self.conversation_history.append({"user": user_input, "bot": response})
+        return response
 
-        return results[0]['text']
+        # return results[0]['text']
 
     def chat(self):
         """
