@@ -12,10 +12,6 @@ class VectorDB:
     def add_item(self, text, vector):
         """
         Add an item to the database.
-        
-        Parameters:
-        text (str): The text component of the item.
-        vector (numpy.ndarray): The vector representation of the text.
         """
         self.data.append({'text': text, 'vector': vector.tolist()})
         self.save()
@@ -34,16 +30,8 @@ class VectorDB:
     def query(self, vector, top_n=5):
         """
         Query the database for the top n most similar items.
-        
-        Parameters:
-        vector (numpy.ndarray): The vector to compare against.
-        top_n (int): The number of top similar items to return.
-        
-        Returns:
-        list: A list of the top n most similar items.
         """
         vectors = np.array([item['vector'] for item in self.data])
         similarities = cosine_similarity([vector], vectors)[0]
         top_indices = similarities.argsort()[-top_n:][::-1]
         return [self.data[idx] for idx in top_indices]
-
