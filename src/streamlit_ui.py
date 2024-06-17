@@ -19,20 +19,20 @@ class StreamlitUI:
             st.session_state.user_input = ""
 
         if not self.chatbot.student_info["year"]:
-            st.session_state.user_input = st.text_input("What year are you in?", key="year_input")
+            st.session_state.user_input = st.text_input("In welk jaar zit je?", key="year_input")
             if st.session_state.user_input:
                 self.chatbot.student_info["year"] = st.session_state.user_input
                 st.session_state.user_input = ""
 
         if self.chatbot.student_info["year"] and not self.chatbot.student_info["oer"]:
-            st.session_state.user_input = st.text_input("Which OER is relevant for you?", key="oer_input")
+            st.session_state.user_input = st.text_input("Welke OER is voor jou relevant?", key="oer_input")
             if st.session_state.user_input:
                 self.chatbot.student_info["oer"] = st.session_state.user_input
                 st.session_state.user_input = ""
 
         if self.chatbot.student_info["year"] and self.chatbot.student_info["oer"]:
             for chat in st.session_state.history:
-                st.write(f"You: {chat['user']}")
+                st.write(f"Jij: {chat['user']}")
                 st.write(f"Bot: {chat['bot']}")
 
             async def submit_data():
@@ -44,4 +44,4 @@ class StreamlitUI:
                     st.session_state.history.append({"user": st.session_state.user_input, "bot": response})
                     st.session_state.user_input = ""
 
-            st.text_input("You:", key="user_input", on_change=lambda: asyncio.run(submit_data()))
+            st.text_input("Jij:", key="user_input", on_change=lambda: asyncio.run(submit_data()))

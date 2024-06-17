@@ -3,6 +3,7 @@ from embedding import Embedding
 from vectordb import VectorDB
 from langchain.llms import Ollama
 from cachetools import TTLCache
+from langdetect import detect
 
 class Chatbot:
     def __init__(self):
@@ -40,13 +41,16 @@ class Chatbot:
         """
         user_input = self.preprocess_input(user_input)
 
+        # Detect language
+        user_language = detect(user_input)
+
         # Check cache
         if user_input in self.cache:
             return self.cache[user_input]
 
         if user_input == "reset":
             self.conversation_history = []
-            return "Conversation reset."
+            return "Conversation reset." if user_language == "en" else "Gesprek opnieuw ingesteld."
 
         # Asynchronous embedding and querying
         user_embedding = await self.async_embed(user_input)
@@ -54,12 +58,13 @@ class Chatbot:
 
         if results:
             context = results[0]['text']
-            try:
+            try: 
+                #response = context
                 response = self.llm(context + " " + user_input)
             except Exception as e:
-                response = f"Failed to generate response using LLM: {e}"
+                response = f"Failed to generate response using LLM: {e}" if user_language == "en" else f"Het genereren van een antwoord met LLM is mislukt: {e}"
         else:
-            response = "I couldn't find any relevant information for your query. Please try again."
+            response = "I couldn't find any relevant information for your query. Please try again." if user_language == "en" else "Ik kon geen relevante informatie vinden voor uw vraag. Probeer het opnieuw."
 
         # Update conversation history and cache
         self.conversation_history.append({"user": user_input, "bot": response})

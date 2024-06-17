@@ -5,6 +5,7 @@ import re
 import os
 from embedding import Embedding
 from vectordb import VectorDB
+from langdetect import detect
 
 nltk.download('punkt')
 
@@ -79,9 +80,16 @@ class OERPreprocessor:
         return chunks, embeddings
 
 if __name__ == "__main__":
-    file_path = "data/raw/b-information-technology-ter-2023-2024.pdf"
-    output_file = "data/processed/chunks.txt"
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    file_paths = [
+        "data/raw/b-information-technology-ter-2023-2024.pdf",
+        "data/raw/b-technische-informatica-oer-2023-2024.pdf"
+    ]
+    
+    for file_path in file_paths:
+        output_file = os.path.join("data/processed", os.path.basename(file_path).replace('.pdf', '_chunks.txt'))
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
-    preprocessor = OERPreprocessor(file_path)
-    chunks, embeddings = preprocessor.preprocess(output_file)
+        preprocessor = OERPreprocessor(file_path)
+        chunks, embeddings = preprocessor.preprocess(output_file)
+
+        print(f"Processed {file_path}, results saved to {output_file}")
