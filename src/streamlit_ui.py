@@ -1,6 +1,5 @@
 import asyncio
 import streamlit as st
-from src.chatbot import Chatbot
 
 class StreamlitUI:
     def __init__(self, chatbot):
