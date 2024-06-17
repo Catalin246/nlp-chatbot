@@ -9,8 +9,8 @@ class TestChatbot(unittest.TestCase):
         self.chatbot.vectordb = MagicMock()
         self.chatbot.llm = MagicMock()
 
-    @patch('chatbot.chatbot.Chatbot.async_embed', new_callable=AsyncMock)
-    @patch('chatbot.chatbot.Chatbot.async_query_vectordb', new_callable=AsyncMock)
+    @patch('src.chatbot.Chatbot.async_embed', new_callable=AsyncMock)
+    @patch('src.chatbot.Chatbot.async_query_vectordb', new_callable=AsyncMock)
     async def test_get_response(self, mock_query_vectordb, mock_async_embed):
         # Mocking embedding and vector DB responses
         mock_async_embed.return_value = "mock_embedding"
