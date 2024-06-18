@@ -39,7 +39,7 @@ This project is an NLP-based chatbot designed to answer questions about OER data
 
 4. Run the tests
     ```bash
-    python3 -m unittest discover -s .\src\tests\
+    python3 -m unittest discover -s .\src\tests
     ```
 
 ## Preprocessing OER Files
