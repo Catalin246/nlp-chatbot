@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF
+import fitz  
 import nltk
 from nltk.tokenize import sent_tokenize
 import re
@@ -11,8 +11,8 @@ nltk.download('punkt')
 class OERPreprocessor:
     def __init__(self, file_path):
         self.file_path = file_path
-        self.embedder = Embedding()  # Initialize the embedder
-        self.vectordb = VectorDB()  # Initialize the vector database
+        self.embedder = Embedding()  
+        self.vectordb = VectorDB()  
 
     def extract_text_from_pdf(self):
         """Extract text from the PDF file."""
@@ -28,9 +28,9 @@ class OERPreprocessor:
 
     def clean_text(self, text):
         """Clean the extracted text."""
-        text = re.sub(r'\s+', ' ', text)  # Replace multiple whitespace with single space
-        text = text.replace('\n', ' ')  # Replace newlines with space
-        text = re.sub(r'[^A-Za-z0-9\s.,;!?]', '', text)  # Remove special characters
+        text = re.sub(r'\s+', ' ', text)  
+        text = text.replace('\n', ' ')  
+        text = re.sub(r'[^A-Za-z0-9\s.,;!?]', '', text)  
         return text.strip()
 
     def tokenize_text(self, text):
@@ -65,10 +65,10 @@ class OERPreprocessor:
         sentences = self.tokenize_text(cleaned_text)
         chunks = self.chunk_text(sentences)
         
-        embeddings = [self.embedder.embed(chunk) for chunk in chunks]  # Embed each chunk
+        embeddings = [self.embedder.embed(chunk) for chunk in chunks]  
 
         for chunk, embedding in zip(chunks, embeddings):
-            self.vectordb.add_item(chunk, embedding[0])  # Add chunk and its embedding to the vector database
+            self.vectordb.add_item(chunk, embedding[0]) 
 
         if output_file:
             with open(output_file, 'w') as f:
@@ -79,9 +79,16 @@ class OERPreprocessor:
         return chunks, embeddings
 
 if __name__ == "__main__":
-    file_path = "data/raw/b-information-technology-ter-2023-2024.pdf"
-    output_file = "data/processed/chunks.txt"
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    file_paths = [
+        "data/raw/b-information-technology-ter-2023-2024.pdf",
+        "data/raw/b-technische-informatica-oer-2023-2024.pdf"
+    ]
+    
+    for file_path in file_paths:
+        output_file = os.path.join("data/processed", os.path.basename(file_path).replace('.pdf', '_chunks.txt'))
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
-    preprocessor = OERPreprocessor(file_path)
-    chunks, embeddings = preprocessor.preprocess(output_file)
+        preprocessor = OERPreprocessor(file_path)
+        chunks, embeddings = preprocessor.preprocess(output_file)
+
+        print(f"Processed {file_path}, results saved to {output_file}")
