@@ -11,8 +11,17 @@ class StreamlitUI:
         """
         st.title("NLP Inholland Chatbot")
 
+        # Language selection with change detection
+        if "language" not in st.session_state:
+            st.session_state.language = "English"
+
         # Language selection
         language = st.selectbox("Select Language / Selecteer taal", ("English", "Nederlands"))
+
+          # Clear history if language changes
+        if language != st.session_state.language:
+            st.session_state.language = language
+            st.session_state.history = []
 
         if "history" not in st.session_state:
             st.session_state.history = []
