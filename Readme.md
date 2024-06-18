@@ -37,6 +37,11 @@ This project is an NLP-based chatbot designed to answer questions about OER data
     .venv/bin/streamlit run app.py
     ```
 
+4. Run the tests
+    ```bash
+    python3 -m unittest discover -s .\src\tests\
+    ```
+
 ## Preprocessing OER Files
 
 The preprocessing script loads, cleans, tokenizes, and chunks the OER data. Run the preprocessing script to prepare the data before starting the chatbot.

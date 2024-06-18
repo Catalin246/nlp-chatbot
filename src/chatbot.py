@@ -56,7 +56,13 @@ class Chatbot:
         if results:
             context = results[0]['text']
             try:
-                response = self.llm(context + " " + user_input)
+                # Include language-specific prompts
+                if lang == "nl":
+                    prompt = f"Context: {context}\nGebruiker: {user_input}\nAntwoord in het Nederlands:"
+                else:
+                    prompt = f"Context: {context}\nUser: {user_input}\nResponse in English:"
+                
+                response = self.llm(prompt)
             except Exception as e:
                 response = f"Failed to generate response using LLM: {e}" if lang == "en" else f"Het genereren van een antwoord met LLM is mislukt: {e}"
         else:

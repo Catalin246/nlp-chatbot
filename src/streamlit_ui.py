@@ -18,7 +18,7 @@ class StreamlitUI:
         # Language selection
         language = st.selectbox("Select Language / Selecteer taal", ("English", "Nederlands"))
 
-          # Clear history if language changes
+        # Clear history if language changes
         if language != st.session_state.language:
             st.session_state.language = language
             st.session_state.history = []
