@@ -19,12 +19,20 @@ This project is an NLP-based chatbot designed to answer questions about OER data
 - **requirements.txt**: Lists all the dependencies required for the project.
 - **app.py**: The main entry point for the Streamlit application.
 
-## How to Run the project with Linux
+## How to Run
 
 1. Create a virtual environment and install dependencies:
-    ```bash
+
+    Linux
+    ```
     python3 -m venv .venv
     .venv/bin/pip install -r requirements.txt
+    ```
+
+    Windows
+    ```
+    python -m venv .venv
+    .venv\Scripts\pip install -r requirements.txt
     ```
 
 2. Preprocess the OER (Run the preprocessing script to prepare the OER. This step involves processing raw data into a format suitable for further analysis or model training. Note that this step only needs to be performed once.)
@@ -32,14 +40,29 @@ This project is an NLP-based chatbot designed to answer questions about OER data
     python3 src/preprocessing.py
     ```
 
+    Windows
+    ```
+    python src\preprocessing.py
+    ```
+
 3. Run the Streamlit app:
     ```bash
     .venv/bin/streamlit run app.py
     ```
 
+    Windows
+    ```
+    .venv\Scripts\streamlit run app.py
+    ```
+
 4. Run the tests
     ```bash
     python3 -m unittest discover -s .\src\tests
+    ```
+
+    Windows
+    ```
+    python -m unittest discover -s src\tests
     ```
 
 ## Preprocessing OER Files
